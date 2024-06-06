@@ -1,3 +1,5 @@
+
+
 const taskInput = document.getElementById("task-input");
 const addTaskBtn = document.getElementById("add-task-btn");
 const taskList = document.getElementById("task-list");
@@ -14,11 +16,12 @@ addTaskBtn.addEventListener("click", function() {
 
 taskList.addEventListener("click", function(event) {
   if (event.target.tagName.toLowerCase() === "li") {
-    event.target.remove();
+    
+    let result = confirm("Are you sure you want to delete");
+    if (result === true) {
+      event.target.remove();
+    } else {
+      alert("you clicked cancel")
+    }
   }
 });
-
-
-
-
-
