@@ -1,0 +1,61 @@
+// Create a new paragraph element
+let para = document.createElement("p");
+
+// Create a text node
+let text = document.createTextNode("This is a new paragraph.");
+
+// Add the text node to the paragraph element
+para.appendChild(text);
+
+// Get the body element
+let body = document.querySelector("body");
+
+// Add the paragraph element to the body
+body.appendChild(para);
+
+// Create a new div element
+let div = document.createElement("div");
+
+// Set the div's id and class
+div.id = "newDiv";
+div.className = "newDivClass";
+
+// Create a new text node
+let divText = document.createTextNode("This is a new div.");
+
+// Add the text node to the div element
+div.appendChild(divText);
+
+// Add the div element to the body
+body.appendChild(div);
+
+// Get the paragraph element
+let paraElement = document.querySelector("p");
+
+// Set the paragraph's text content
+paraElement.textContent = "This is the updated paragraph.";
+
+// Get the div element
+let divElement = document.querySelector("#newDiv");
+
+// Set the div's text content
+divElement.textContent = "This is the updated div.";
+This code creates a new paragraph and div element, adds them to the body of the HTML document, and then updates their text content.
+
+Here are some common DOM methods and properties:
+
+document.createElement(tagName): Creates a new element with the specified tag name.
+document.createTextNode(text): Creates a new text node with the specified text.
+element.appendChild(node): Adds a node to the end of an element's child nodes.
+element.removeChild(node): Removes a node from an element's child nodes.
+element.replaceChild(newNode, oldNode): Replaces a node in an element's child nodes with a new node.
+element.innerHTML: Gets or sets the HTML content of an element.
+element.textContent: Gets or sets the text content of an element.
+element.className: Gets or sets the class name of an element.
+element.id: Gets or sets the id of an element.
+element.style: Gets or sets the style of an element.
+document.querySelector(selector): Returns the first element that matches the specified selector.
+document.querySelectorAll(selector): Returns a list of all elements that match the specified selector.
+element.addEventListener(event, function): Adds an event listener to an element.
+element.removeEventListener(event, function): Removes an event listener from an element.
+These are just a few examples of what you can do with the DOM in JavaScript. The DOM is a powerful tool that allows you to dynamically create and manipulate web pages.

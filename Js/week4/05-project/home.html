@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Book App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body background="recipe-book-app-LuminaryechoTI/background.jpg">
+    <header>
+        <nav>
+            <ul>
+                <li><a href="Recipe-page.html"><h1 style="color: gray;">Recipe-page</h1></a></li>
+                <br>
+                <li><a href="recipe-book.html"><h1 style="color: grey;">Recipe Book</h1></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="home">
+            <h1>Home</h1>
+            <input type="search" id="search-input" placeholder="Search for recipes">
+            <button id="search-button">Search</button>
+            <ul id="popular-recipes">
+                <!-- popular recipes will be displayed here -->
+            </ul>
+        </section>
+        <section id="recipe-page">
+            <h1>Recipe Page</h1>
+            <div id="recipe-details">
+                <!-- recipe details will be displayed here -->
+            </div>
+            <button id="save-recipe-button">Save Recipe</button>
+        </section>
+        <section id="recipe-book">
+            <h1>Recipe Book</h1>
+            <ul id="saved-recipes">
+                <!-- saved recipes will be displayed here -->
+            </ul>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
