@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './Data'
+import App from './Memo'
 //import {BrowserRouter} from 'react-router-dom'//react-router-dom import
 //import './App.css'
 
