@@ -7,7 +7,7 @@ const EventDetails = () => {
   const [event, setEvent] = useState(null);
 
   useEffect(() => {
-    // Simulated fetch from backend (replace with actual API call)
+
     axios.get(`http://localhost:5000/events/${id}`)
       .then(res => {
         setEvent(res.data);
@@ -25,7 +25,7 @@ const EventDetails = () => {
       <p><strong>Location:</strong> {event.location}</p>
       <p><strong>Capacity:</strong> {event.capacity}</p>
       <p><strong>Description:</strong> {event.description}</p>
-      {/* Add more details as needed */}
+      
     </div>
   );
 };

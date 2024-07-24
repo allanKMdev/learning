@@ -1,62 +1,53 @@
 
-import { BrowserRouter , Routes, Route, Link  } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import EventList from './EventList';
 import EventForm from './EventForum';
 import EventDetails from './EventDetails';
 import Home from './Home';
-import Notifications from './Notifications';
-import Tickets from './Ticket';
-import './index.css'; 
+// import NotificationList from './NotificationList';
+import TicketsPage from './TicketPage';
+import './index.css';
 
 
-const App = () => {
+
+
+function App() {
   return (
-    <BrowserRouter>
-    
-       
-        <div className="App flex flex-col min-h-screen bg-blue-700 ">
-  <div className="bg-blue-700"> 
-  
-  </div>
-
-         <header className="flex items-center justify-between bg-pink-800 text-white p-4">
-          <nav className="flex items-center">
-          <li>
-          <img src="./the-kaleidoscope-collective-high-resolution-logo-white.png" alt="The Kaleidoscope Collective Logo" className="text-sm font-thin" />
-          </li>
-          </nav>
-      
-          
+    <Router>
+      <div className="App flex flex-col min-h-screen bg-yellow-300">
+        <header className="flex items-center justify-between bg-white text-black p-4">
+          <div className="flex items-center">
+            <h1 className="text-center text-black">Welcome</h1>
+            <img src="/new.jpg" alt="The Kaleidoscope Collective Logo" className="ml-2 h-10" />
+          </div>
           <ul className="flex space-x-4">
             <li className="hover:text-gray-400">
-              <Link to="/" className="text-white"><h1>HOME</h1></Link>
+              <Link to="/" className="text-black">HOME</Link>
             </li>
             <li className="hover:text-gray-400">
-              <Link to="/events" className="text-white"><h1>EVENTS</h1></Link>
+              <Link to="/events" className="text-black">EVENTS</Link>
             </li>
             <li className="hover:text-gray-400">
-              <Link to="/notifications" className="text-white"><h1>NOTIFICATIONS</h1></Link>
+              <Link to="/notifications" className="text-black">NOTIFICATIONS</Link>
             </li>
             <li className="hover:text-gray-400">
-              <Link to="/tickets" className="text-white"><h1>TICKETS</h1></Link>
+              <Link to="/tickets" className="text-black">TICKETS</Link>
             </li>
           </ul>
-          
         </header>
-
         <main className="flex-grow p-4">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/events" element={<EventList />} />
             <Route path="/events/create" element={<EventForm />} />
             <Route path="/events/:id" element={<EventDetails />} />
-            <Route path="/notifications" element={<Notifications />} />
-            <Route path="/tickets" element={<Tickets />} />
+            {/* <Route path="/notifications" element={<NotificationsPage />} /> */}
+            <Route path="/tickets" element={<TicketsPage />} />
           </Routes>
         </main>
       </div>
-    </BrowserRouter>
+    </Router>
   );
-};
+}
 
 export default App;

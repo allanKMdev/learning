@@ -1,0 +1,7 @@
+.App {
+    min-h-screen;
+    background-image: url(background.jpeg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
