@@ -1,0 +1,17 @@
+ {% extends "base.html" %} 
+ {% block title %} Home  {% end block %}
+
+ {% block content %}
+<h1> My Blogs</h1>
+<ul> 
+    {% for blogs in blogs %}
+    <li>
+        <h3>{{blog.title}}</h3>
+        <p>{{blog.content}}</p>
+        <p><b>{{blog.author}}</b></p>
+        <p>{{blog.date}}</p>
+    </li>
+    {% endfor %}
+</ul>
+ {% end block %} 
+
