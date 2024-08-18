@@ -11,9 +11,12 @@ def guessing_game():
 
         if guess < number:
             print("Too low!")
-        elif guess > number:
+        elif  guess > number:
             print("Too high!")
-
+            
+        else:    
+            print(" ")
+            
     if guess == number:
         print(f"Congratulations! You guessed the number in {attempts} attempts.")
     else:
