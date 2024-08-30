@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Add {% endblock %}
+
+{% block content %}
+<form method="post" class="max-w-lg mx-auto mt-8">
+    {% csrf_token %}
+    <div class="mb-4">
+        <label for="{{ form.author.id_for_label }}" class="block text-gray-700 font-bold mb-2">FoodName:</label>
+        {{ form.author }}
+    </div>
+    <div class="mb-4">
+        <label for="{{ form.title.id_for_label }}" class="block text-gray-700 font-bold mb-2">Calories</label>
+        {{ form.title }}
+    </div>
+    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Add Food
+    </button>
+</form>
+{% endblock %}
