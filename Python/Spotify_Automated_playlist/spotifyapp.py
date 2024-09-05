@@ -39,3 +39,6 @@ class Spotify:
                                                  description="")
         print(play_list)
         self.sp.playlist_add_items(play_list['id'], song_list, None)
+        
+start = Spotify()
+run_app = start.spotify_create_play_list()

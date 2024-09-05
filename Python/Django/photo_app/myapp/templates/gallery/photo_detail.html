@@ -1,0 +1,23 @@
+{% comment %} {% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ photo.title }}</h1>
+
+  <img src="{{ photo.image.url }}" alt="{{ photo.title }}">
+
+  <p>{{ photo.description }}</p>
+
+  <h3>Tags:</h3>
+  <ul>
+    {% for tag in photo.tags.all %}
+      <li>{{ tag }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
+ {% endcomment %}
+
+
+<img src="{{ photo.image.url }}" alt="{{ photo.title }}">
+<h2>{{ photo.title }}</h2>
+<p>{{ photo.description }}</p>
+<p>Tags: {% for tag in photo.tags.all %}{{ tag }} {% endfor %}</p>
