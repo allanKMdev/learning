@@ -1,0 +1,48 @@
+What you can do with sql:
+-retrieve data
+-insert records
+-update records
+-delete records
+-create new databases
+-create stored procedures
+
+###########################################
+               syntax
+
+1. Create database - CREATE DATABASE database_name; eg. CREATE DATABASE myapp;
+2. Verify / list database - SHOW DATABASE;
+3. Replacing database - CREATE OR REPLACE DATABASE database_name; eg. CREATE OR REPLACE DATABASE myapp;
+4. Deleting a database - DROP DATABASE database_name; eg. DROP DATABASE myapp;
+5. Renaming database - ALTER DATABASE old_database_name MODIFY NAME = new_database_name; eg. ALTER DATABASE myapp MODIFY NAME = calories;
+6. Use database_name; eg. USE myapp;
+7. Creating table - CREATE TABLE table_name ("column1" "datatype", "column2" "datatype" ); eg. CREATE TABLE blog(id INT, name VARCHAR, age INT)
+
+
+USE Zindua;
+
+CREATE TABLE employees(id INT PRIMARY KEY, first_name VARCHAR(100), last_name VARCHAR(100), email TEXT, phone_number INT, department_id INT);
+
+#CREATE DATABASE Zindua;
+USE Zindua;
+
+#CREATE TABLE employees(id INT PRIMARY KEY, first_name VARCHAR(100), last_name VARCHAR(100), email TEXT, phone_number INT, department_id INT);
+
+#CREATE TABLE departments(id INT PRIMARY KEY, name VARCHAR(100), manager_id INT);
+
+#CREATE TABLE projects(id INT PRIMARY KEY, name VARCHAR(100), description TEXT, start_date DATE, end_date DATE);
+
+#ALTER TABLE employees ADD CONSTRAINT FOREIGN KEY(department_id) REFERENCES departments (id);
+
+#INSERT INTO employees(id, first_name, last_name, email, phone_number, department_id) VALUES (1, 'Shawn', 'Muturi', "shawnpaul480@gmail.com", 0799001556, 1);
+
+#INSERT INTO departments(id, name, manager_id) VALUES (1, 'Software Development', 1);
+
+#INSERT INTO projects(id, name, description, start_date, end_date) VALUES(1, 'Final Capstone', 'Create a project that covers everything we have learnt till date', '2024-08-20', '2024-09-20'); 
+
+USE library;
+
+#ALTER TABLE employees ADD COLUMN job_title VARCHAR(100);
+
+#DROP TABLE projects;
+
+ALTER TABLE departments DROP COLUMN manager_id;

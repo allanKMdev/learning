@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,13 +25,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-5st24xu*2=9m+l$g=b*0rfxe@xj2d&8tiqr+h9qo@b^82k77=q'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ '*' ]
+LOGIN_REDIRECT_URL = '/'
 
 # Application definition
 
@@ -38,13 +44,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myapp',
+    'cloudinary',
 ]
-STATIC_URL = '/static/'
 
-AUTHENTICATION_BACKENDS = [
-    'myapp.backends.CustomAuthBackend',
-    'django.contrib.auth.backends.ModelBackend',  # Default authentication backend
-]
+# STATIC_URL = '/static/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -58,17 +61,18 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'example.urls'
 
-DATABASES ={
-    'default':{
-        'ENGINE':'django.db.backends.postgresql',
-        'NAME':'myapp',
-        'USER':'postgrs',
-        'PASSWORD': 'luminar',
-        'HOST':'localhost',
-        'PORT':'5432'
-        
+DATABASES = {
+    'default': {
+        'ENGINE': config('DATABASE_ENGINE'),
+        'NAME':config('DATABASE_NAME'),
+        'USER':config('DATABASE_USER'),
+        'PASSWORD':config('DATABASE_PASSWORD'),
+        'HOST':config('DATABASE_HOST'),
+        'PORT':config('DATABASE_PORT'),
     }
+    
 }
+
 
 TEMPLATES = [
     {
@@ -88,16 +92,27 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'example.wsgi.application'
 
+cloudinary.config(
+    cloud_name = config('CLOUDINARY_CLOUD_NAME'),
+    api_key = config('CLOUDINARY_API_KEY'),
+    api_secret = config('CLOUDINARY_API_SECRET'),
+)
+
+
+
+
+
+
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#        'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
@@ -140,3 +155,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
