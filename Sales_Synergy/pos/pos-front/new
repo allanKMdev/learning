@@ -1,0 +1,5 @@
+npm create vite@latest pos-front -- -- template react
+npm install react-router-dom
+npm install axios
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p

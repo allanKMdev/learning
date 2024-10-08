@@ -1,5 +1,9 @@
 npm install
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init
+npx tailwindcss init -p
 npm install react-router-dom
 npm install axios
+npm install react-chartjs2 chart.js
+npm install react-router-dom axios
+npm install react-scripts
