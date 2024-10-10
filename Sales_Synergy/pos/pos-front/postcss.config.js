@@ -4,3 +4,11 @@ export default {
     autoprefixer: {},
   },
 }
+
+// // postcss.config.js
+// module.exports = {
+//   plugins: {
+//     tailwindcss: {},
+//     autoprefixer: {},
+//   },
+// }
