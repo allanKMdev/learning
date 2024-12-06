@@ -16,29 +16,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-# from myapp.views import CreateUser
-from django.conf import settings
-from django.conf.urls.static import static
-from django_registration.backends.one_step.views import RegistrationView
-from django.contrib.auth.views import logout_then_login
+# from django.conf import settings
+# from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/token/', TokenObtainPairView.as_view(), name='get_token'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api-auth/', include('rest_framework.urls')),
-    path('api/', include('myapp.urls')),
-   path('accounts/register/', RegistrationView.as_view(success_url='/'), name='django_registration_register'),
-    path('accounts/', include('django_registration.backends.one_step.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('logout/' ,  logout_then_login,name='logout') 
+    path('myapp/', include('myapp.urls')),
+    # path('ckeditor/', include('ckeditor_uploader.urls')),
+    # path("ckeditor5/", include('django_ckeditor_5.urls')),
+    
+   
 ]
 
 
-
 #allows to work with media folder locally
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 

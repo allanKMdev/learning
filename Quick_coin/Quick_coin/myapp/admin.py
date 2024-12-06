@@ -1,67 +1,128 @@
+# # myapp/admin.py
+# from django.contrib import admin
+# from django.contrib.auth.admin import UserAdmin
+# from .models import User , Product ,ProductOption ,Category
+
+# class CustomUserAdmin(UserAdmin):
+#     model = User
+#     list_display = ['email', 'username', 'is_staff', 'is_active']
+#     search_fields = ['email', 'username']
+#     ordering = ['email']
+
+
+
+
+
+# @admin.register(Product)
+# class ProductAdmin(admin.ModelAdmin):
+#     list_display = ('name', 'price', 'stock', 'category', 'created_at')
+#     list_filter = ('category',)
+#     search_fields = ('name',)
+
+# @admin.register(ProductOption)
+# class ProductOptionAdmin(admin.ModelAdmin):
+#     list_display = ('product', 'weight', 'price')
+#     list_filter = ('product',)
+
+# @admin.register(Category)
+# class CategoryAdmin(admin.ModelAdmin):
+#     list_display = ('name', 'description')
+
+
+
+
+
+
+
+# from django.contrib import admin
+# from django.contrib.auth.admin import UserAdmin
+# from .models import User, Product, ProductOption, Category
+
+
+# class CustomUserAdmin(UserAdmin):
+#     model = User
+#     list_display = ['email', 'username', 'is_staff', 'is_active']
+#     search_fields = ['email', 'username']
+#     ordering = ['email']
+#     list_filter = ['is_staff', 'is_active']
+
+
+# class ProductOptionInline(admin.TabularInline):
+#     model = ProductOption
+#     extra = 1  # Display one blank form by default
+
+
+# @admin.register(Product)
+# class ProductAdmin(admin.ModelAdmin):
+#     list_display = ('name', 'price', 'stock', 'category', 'created_at')
+#     list_filter = ('category',)
+#     search_fields = ('name',)
+#     readonly_fields = ('created_at',)
+#     inlines = [ProductOptionInline]  # Inline view for ProductOption
+
+#     @admin.action(description='Mark selected products as out of stock')
+#     def mark_out_of_stock(self, request, queryset):
+#         queryset.update(stock=0)
+
+#     actions = [mark_out_of_stock]
+
+
+# @admin.register(ProductOption)
+# class ProductOptionAdmin(admin.ModelAdmin):
+#     list_display = ('product', 'weight', 'price')
+#     list_filter = ('product',)
+#     ordering = ['product']
+
+
+# @admin.register(Category)
+# class CategoryAdmin(admin.ModelAdmin):
+#     list_display = ('name', 'description')
+#     search_fields = ('name', 'description')
+#     ordering = ['name']
+
+
+# # Register CustomUserAdmin
+# admin.site.register(User, CustomUserAdmin)
+
+
+
+
+
+
+
+
+
+
+
 
 from django.contrib import admin
-from .models import Customer, InventoryItem, Sale, Debt, Product, Quicksale, QuicksaleItem
+from django.contrib.auth.admin import UserAdmin
+from .models import User, Product, ProductOption, Category
 
-@admin.register(Customer)
-class CustomerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'phone', 'credit_limit', 'outstanding_balance')
-    search_fields = ('name', 'email')
-    list_filter = ('credit_limit',)
-    ordering = ('name',)
-    # date_hierarchy, fieldsets, and actions can be added as needed
-
-@admin.register(InventoryItem)
-class InventoryItemAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price', 'quantity', 'description')
-    search_fields = ('name',)
-    list_filter = ('price',)
-    ordering = ('name',)
-
-@admin.register(Sale)
-class SaleAdmin(admin.ModelAdmin):
-    list_display = ('customer', 'item', 'quantity', 'display_total_price', 'date', 'payment_status', 'payment_method')
-    list_filter = ('payment_status', 'payment_method', 'date')
-    search_fields = ('customer__name', 'item__name')
-    date_hierarchy = 'date'
-    
-    @admin.display(description='Total Price')
-    def display_total_price(self, obj):
-        return f"${obj.total_price:.2f}"
-
-@admin.register(Debt)
-class DebtAdmin(admin.ModelAdmin):
-    list_display = ('customer', 'amount', 'due_date', 'status')
-    list_filter = ('status', 'due_date')
-    search_fields = ('customer__name',)
-    ordering = ('due_date',)
+class CustomUserAdmin(UserAdmin):
+    model = User
+    list_display = ['email', 'username', 'is_staff', 'is_active']
+    search_fields = ['email', 'username']
+    ordering = ['email']
+    list_filter = ['is_staff', 'is_active']
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price', 'weight', 'quantity_in_stock')
+    list_display = ('name', 'price', 'stock', 'category', 'created_at')
+    list_filter = ('category',)
     search_fields = ('name',)
-    list_filter = ('price',)
-    ordering = ('name',)
+    readonly_fields = ('created_at',)
 
-class QuicksaleItemInline(admin.TabularInline):
-    model = QuicksaleItem
-    extra = 1  # To display an additional empty form
+@admin.register(ProductOption)
+class ProductOptionAdmin(admin.ModelAdmin):
+    list_display = ('product', 'weight', 'price')
+    list_filter = ('product',)
+    ordering = ['product']
 
-@admin.register(Quicksale)
-class QuicksaleAdmin(admin.ModelAdmin):
-    list_display = ('customer', 'sale_date', 'payment_method', 'total_price', 'is_paid')
-    list_filter = ('payment_method', 'is_paid', 'sale_date')
-    search_fields = ('customer__name',)
-    date_hierarchy = 'sale_date'
-    inlines = [QuicksaleItemInline]
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description')
+    search_fields = ('name', 'description')
+    ordering = ['name']
 
-@admin.register(QuicksaleItem)
-class QuicksaleItemAdmin(admin.ModelAdmin):
-    list_display = ('sale', 'product', 'quantity', 'price_per_item', 'display_total_price')
-    list_filter = ('sale__sale_date',)
-    search_fields = ('sale__customer__name', 'product__name')
-    
-    @admin.display(description='Total Price')
-    def display_total_price(self, obj):
-        return f"${obj.total_price:.2f}"
-
-
+admin.site.register(User, CustomUserAdmin)

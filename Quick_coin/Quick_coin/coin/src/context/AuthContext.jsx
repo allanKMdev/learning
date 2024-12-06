@@ -1,53 +1,148 @@
-import { createContext, useState } from 'react';
-import PropTypes from 'prop-types';
-import { registerUser, loginUser } from '../api'; // Ensure loginUser is defined correctly in your API module
+// import {createContext, useState, useEffect} from "react";
+// // import jwt_decode from "jwt-decode";
+// import {useHistory} from "react-router-dom";
+// const swal = require('sweetalert2')
 
-export const AuthContext = createContext();
+// const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+// export default AuthContext
 
-    // Register a new user
-    const register = async (email, username, password) => {
-        const userData = { email, username, password };
-        try {
-            const newUser = await registerUser(userData);
-            setUser(newUser);  // Set the user state with the new user data
-            // Optionally save authentication token in localStorage here
-        } catch (error) {
-            console.error("Registration failed:", error);
-            // Set error state or show error message to the user
-        }
-    };
+// export const AuthProvider = ({ children }) => {
+//     const [authTokens, setAuthTokens] = useState(() =>
+//         localStorage.getItem("authTokens")
+//             ? JSON.parse(localStorage.getItem("authTokens"))
+//             : null
+//     );
+    
 
-    // Login functionality
-    const login = async (email, password) => {
-        try {
-            const loggedInUser = await loginUser({ email, password }); // Ensure loginUser handles API call
-            setUser(loggedInUser);
-            // Optionally store authentication token in localStorage
-        } catch (error) {
-            console.error("Login failed:", error);
-            // Handle login error (e.g., invalid credentials)
-        }
-    };
+//     const [user, setUser] = useState(() => 
+//         localStorage.getItem("authTokens")
+//             ? jwt_decode(localStorage.getItem("authTokens"))
+//             : null
+//     );
 
-    // Logout functionality
-    const logout = () => {
-        setUser(null); // Clear the user state
-        // Optionally remove authentication token from localStorage
-    };
 
-    return (
-        <AuthContext.Provider value={{ user, register, login, logout }}>
-            {children}
-        </AuthContext.Provider>
-    );
-};
+//     const [loading, setLoading] = useState(true);
 
-// Prop validation for AuthProvider
-AuthProvider.propTypes = {
-    children: PropTypes.node.isRequired,
-};
+//     const history = useHistory();
 
-export default AuthProvider;
+//     const loginUser = async (email, password) => {
+//         const response = await fetch("http://127.0.0.1:8000/api/token/", {
+//             method: "POST",
+//             headers:{
+//                 "Content-Type":"application/json"
+//             },
+//             body: JSON.stringify({
+//                 email, password
+//             })
+//         })
+//         const data = await response.json()
+//         console.log(data);
+
+//         if(response.status === 200){
+//             console.log("Logged In");
+//             setAuthTokens(data)
+//             setUser(jwt_decode(data.access))
+//             localStorage.setItem("authTokens", JSON.stringify(data))
+//             history.push("/")
+//             swal.fire({
+//                 title: "Login Successful",
+//                 icon: "success",
+//                 toast: true,
+//                 timer: 6000,
+//                 position: 'top-right',
+//                 timerProgressBar: true,
+//                 showConfirmButton: false,
+//             })
+
+//         } else {    
+//             console.log(response.status);
+//             console.log("there was a server issue");
+//             swal.fire({
+//                 title: "Username or passowrd does not exists",
+//                 icon: "error",
+//                 toast: true,
+//                 timer: 6000,
+//                 position: 'top-right',
+//                 timerProgressBar: true,
+//                 showConfirmButton: false,
+//             })
+//         }
+//     }
+
+//     const registerUser = async (email, username, password, password2) => {
+//         const response = await fetch("http://127.0.0.1:8000/api/register/", {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type":"application/json"
+//             },
+//             body: JSON.stringify({
+//                 email, username, password, password2
+//             })
+//         })
+//         if(response.status === 201){
+//             history.push("/login")
+//             swal.fire({
+//                 title: "Registration Successful, Login Now",
+//                 icon: "success",
+//                 toast: true,
+//                 timer: 6000,
+//                 position: 'top-right',
+//                 timerProgressBar: true,
+//                 showConfirmButton: false,
+//             })
+//         } else {
+//             console.log(response.status);
+//             console.log("there was a server issue");
+//             swal.fire({
+//                 title: "An Error Occured " + response.status,
+//                 icon: "error",
+//                 toast: true,
+//                 timer: 6000,
+//                 position: 'top-right',
+//                 timerProgressBar: true,
+//                 showConfirmButton: false,
+//             })
+//         }
+//     }
+
+//     const logoutUser = () => {
+//         setAuthTokens(null)
+//         setUser(null)
+//         localStorage.removeItem("authTokens")
+//         history.push("/login")
+//         swal.fire({
+//             title: "YOu have been logged out...",
+//             icon: "success",
+//             toast: true,
+//             timer: 6000,
+//             position: 'top-right',
+//             timerProgressBar: true,
+//             showConfirmButton: false,
+//         })
+//     }
+
+//     const contextData = {
+//         user, 
+//         setUser,
+//         authTokens,
+//         setAuthTokens,
+//         registerUser,
+//         loginUser,
+//         logoutUser,
+//     }
+
+//     useEffect(() => {
+//         if (authTokens) {
+//             setUser(jwt_decode(authTokens.access))
+//         }
+//         setLoading(false)
+//     }, [authTokens, loading])
+
+//     return (
+//         <AuthContext.Provider value={contextData}>
+//             {loading ? null : children}
+//         </AuthContext.Provider>
+//     )
+
+// }

@@ -1,594 +1,265 @@
-// import  { useState } from 'react';
+// import  { useState, useEffect } from 'react';
+// import PropTypes from 'prop-types';
 
-// const Customers = () => {
-//   // Initial customer data
-//   const [customers, setCustomers] = useState([
-//     { id: 1, name: 'John Doe', email: 'john@example.com', phone: '123-456-7890' },
-//     { id: 2, name: 'Jane Smith', email: 'jane@example.com', phone: '098-765-4321' },
-//   ]);
+// const CustomerTransactions = ({ customerId }) => {
+//   const [transactions, setTransactions] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
 
-//   // State for the form inputs
-//   const [newCustomer, setNewCustomer] = useState({ name: '', email: '', phone: '' });
-//   const [editingCustomer, setEditingCustomer] = useState(null); // Track which customer is being edited
-
-//   // Handle input changes for both adding and editing customers
-//   const handleInputChange = (e) => {
-//     const { name, value } = e.target;
-//     setNewCustomer({ ...newCustomer, [name]: value });
-//   };
-
-//   // Add a new customer
-//   const addCustomer = (e) => {
-//     e.preventDefault();
-//     if (newCustomer.name && newCustomer.email && newCustomer.phone) {
-//       setCustomers([...customers, { id: Date.now(), ...newCustomer }]);
-//       setNewCustomer({ name: '', email: '', phone: '' }); // Reset form
-//     }
-//   };
-
-//   // Remove a customer
-//   const removeCustomer = (id) => {
-//     setCustomers(customers.filter((customer) => customer.id !== id));
-//   };
-
-//   // Start editing customer details
-//   const startEditing = (customer) => {
-//     setEditingCustomer(customer);
-//     setNewCustomer(customer);
-//   };
-
-//   // Save edited customer
-//   const saveEditedCustomer = (e) => {
-//     e.preventDefault();
-//     setCustomers(
-//       customers.map((customer) =>
-//         customer.id === editingCustomer.id ? { ...editingCustomer, ...newCustomer } : customer
-//       )
-//     );
-//     setEditingCustomer(null);
-//     setNewCustomer({ name: '', email: '', phone: '' }); // Reset form
-//   };
-
-//   return (
-//     <div className="p-6">
-//       <h1 className="text-3xl font-bold mb-6">Customers Management</h1>
-
-//       {/* Customer Form */}
-//       <form onSubmit={editingCustomer ? saveEditedCustomer : addCustomer} className="mb-6">
-//         <div className="mb-4">
-//           <input
-//             type="text"
-//             name="name"
-//             placeholder="Customer Name"
-//             value={newCustomer.name}
-//             onChange={handleInputChange}
-//             className="p-2 border border-gray-300 rounded-lg w-full max-w-md"
-//             required
-//           />
-//         </div>
-//         <div className="mb-4">
-//           <input
-//             type="email"
-//             name="email"
-//             placeholder="Customer Email"
-//             value={newCustomer.email}
-//             onChange={handleInputChange}
-//             className="p-2 border border-gray-300 rounded-lg w-full max-w-md"
-//             required
-//           />
-//         </div>
-//         <div className="mb-4">
-//           <input
-//             type="tel"
-//             name="phone"
-//             placeholder="Customer Phone"
-//             value={newCustomer.phone}
-//             onChange={handleInputChange}
-//             className="p-2 border border-gray-300 rounded-lg w-full max-w-md"
-//             required
-//           />
-//         </div>
-//         <button
-//           type="submit"
-//           className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-//         >
-//           {editingCustomer ? 'Save Changes' : 'Add Customer'}
-//         </button>
-//         {editingCustomer && (
-//           <button
-//             type="button"
-//             onClick={() => {
-//               setEditingCustomer(null);
-//               setNewCustomer({ name: '', email: '', phone: '' });
-//             }}
-//             className="ml-2 bg-gray-500 text-white px-4 py-2 rounded-lg"
-//           >
-//             Cancel
-//           </button>
-//         )}
-//       </form>
-
-//       {/* Customers Table */}
-//       <div className="overflow-x-auto">
-//         <table className="min-w-full bg-white shadow-md rounded-lg">
-//           <thead className="bg-gray-100">
-//             <tr>
-//               <th className="py-3 px-6 text-left">Name</th>
-//               <th className="py-3 px-6 text-left">Email</th>
-//               <th className="py-3 px-6 text-left">Phone</th>
-//               <th className="py-3 px-6 text-left">Actions</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {customers.length > 0 ? (
-//               customers.map((customer) => (
-//                 <tr key={customer.id} className="border-b">
-//                   <td className="py-3 px-6">{customer.name}</td>
-//                   <td className="py-3 px-6">{customer.email}</td>
-//                   <td className="py-3 px-6">{customer.phone}</td>
-//                   <td className="py-3 px-6">
-//                     <button
-//                       onClick={() => startEditing(customer)}
-//                       className="text-blue-500 hover:text-blue-700 mr-2"
-//                     >
-//                       Edit
-//                     </button>
-//                     <button
-//                       onClick={() => removeCustomer(customer.id)}
-//                       className="text-red-500 hover:text-red-700"
-//                     >
-//                       Delete
-//                     </button>
-//                   </td>
-//                 </tr>
-//               ))
-//             ) : (
-//               <tr>
-//                 <td colSpan="4" className="py-4 px-6 text-center">
-//                   No customers found.
-//                 </td>
-//               </tr>
-//             )}
-//           </tbody>
-//         </table>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Customers;
-
-
-// import { useState, useEffect } from 'react';
-
-// const API_URL = '/api/customers/';
-
-// const Customers = () => {
-//   const [customers, setCustomers] = useState([]);
-//   const [newCustomer, setNewCustomer] = useState({ name: '', email: '', phone: '' });
-//   const [editingCustomer, setEditingCustomer] = useState(null);
-//   const [loading, setLoading] = useState(false);
-
-//   // Fetch customers from the backend on initial load
 //   useEffect(() => {
-//     fetchCustomers();
-//   }, []);
-
-//   const fetchCustomers = async () => {
-//     try {
-//       const res = await fetch(API_URL);
-//       const data = await res.json();
-//       setCustomers(data);
-//     } catch (error) {
-//       console.error('Error fetching customers:', error);
+//     // Validate customerId before making the fetch call
+//     if (!customerId) {
+//       setError('Invalid customer ID.');
+//       setLoading(false);
+//       return;
 //     }
-//   };
 
-//   const handleInputChange = (e) => {
-//     const { name, value } = e.target;
-//     setNewCustomer({ ...newCustomer, [name]: value });
-//   };
-
-//   const addCustomer = async (e) => {
-//     e.preventDefault();
-//     if (newCustomer.name && newCustomer.email && newCustomer.phone) {
+//     const fetchTransactions = async () => {
+//       setLoading(true);
+//       setError(null);
 //       try {
-//         setLoading(true);
-//         const res = await fetch(API_URL, {
-//           method: 'POST',
-//           headers: {
-//             'Content-Type': 'application/json',
-//           },
-//           body: JSON.stringify(newCustomer),
-//         });
-//         if (res.ok) {
-//           fetchCustomers(); // Refresh the customer list
-//           setNewCustomer({ name: '', email: '', phone: '' });
-//         } else {
-//           throw new Error('Failed to add customer');
+//         const response = await fetch(`/api/customers/${customerId}/transactions/`);
+//         if (!response.ok) {
+//           throw new Error(`Error: ${response.status} ${response.statusText}`);
 //         }
-//       } catch (error) {
-//         console.error(error);
+//         const data = await response.json();
+//         setTransactions(data);
+//       } catch (err) {
+//         console.error(err);
+//         setError('Failed to fetch transactions.');
 //       } finally {
 //         setLoading(false);
 //       }
-//     }
-//   };
+//     };
 
-//   const removeCustomer = async (id) => {
-//     try {
-//       const res = await fetch(`${API_URL}${id}/`, {
-//         method: 'DELETE',
-//       });
-//       if (res.ok) {
-//         setCustomers(customers.filter((customer) => customer.id !== id));
-//       } else {
-//         throw new Error('Failed to delete customer');
-//       }
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
+//     fetchTransactions();
+//   }, [customerId]);
 
-//   const startEditing = (customer) => {
-//     setEditingCustomer(customer);
-//     setNewCustomer(customer);
-//   };
-
-//   const saveEditedCustomer = async (e) => {
-//     e.preventDefault();
-//     try {
-//       setLoading(true);
-//       const res = await fetch(`${API_URL}${editingCustomer.id}/`, {
-//         method: 'PUT',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(newCustomer),
-//       });
-//       if (res.ok) {
-//         fetchCustomers(); // Refresh customer list
-//         setEditingCustomer(null);
-//         setNewCustomer({ name: '', email: '', phone: '' });
-//       } else {
-//         throw new Error('Failed to save edited customer');
-//       }
-//     } catch (error) {
-//       console.error(error);
-//     } finally {
-//       setLoading(false);
-//     }
+//   // Function to format currency using Intl.NumberFormat
+//   const formatCurrency = (amount) => {
+//     return new Intl.NumberFormat('en-US', { 
+//       style: 'currency', 
+//       currency: 'USD' 
+//     }).format(amount);
 //   };
 
 //   return (
-//     <div className="p-6">
-//       <h1 className="text-3xl font-bold mb-6">Customer Management</h1>
-
-//       {/* Customer Form */}
-//       <form onSubmit={editingCustomer ? saveEditedCustomer : addCustomer} className="mb-6">
-//         <div className="mb-4">
-//           <input
-//             type="text"
-//             name="name"
-//             placeholder="Customer Name"
-//             value={newCustomer.name}
-//             onChange={handleInputChange}
-//             className="p-2 border border-gray-300 rounded-lg w-full max-w-md"
-//             required
-//           />
-//         </div>
-//         <div className="mb-4">
-//           <input
-//             type="email"
-//             name="email"
-//             placeholder="Customer Email"
-//             value={newCustomer.email}
-//             onChange={handleInputChange}
-//             className="p-2 border border-gray-300 rounded-lg w-full max-w-md"
-//             required
-//           />
-//         </div>
-//         <div className="mb-4">
-//           <input
-//             type="tel"
-//             name="phone"
-//             placeholder="Customer Phone"
-//             value={newCustomer.phone}
-//             onChange={handleInputChange}
-//             className="p-2 border border-gray-300 rounded-lg w-full max-w-md"
-//             required
-//           />
-//         </div>
-//         <button
-//           type="submit"
-//           className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-//           disabled={loading}
-//         >
-//           {loading ? "Saving..." : editingCustomer ? 'Save Changes' : 'Add Customer'}
-//         </button>
-//         {editingCustomer && (
-//           <button
-//             type="button"
-//             onClick={() => {
-//               setEditingCustomer(null);
-//               setNewCustomer({ name: '', email: '', phone: '' });
-//             }}
-//             className="ml-2 bg-gray-500 text-white px-4 py-2 rounded-lg"
-//           >
-//             Cancel
-//           </button>
-//         )}
-//       </form>
-
-//       {/* Customers Table */}
-//       <div className="overflow-x-auto">
+//     <div>
+//       <h2 className="text-xl font-bold mb-4">Transaction History</h2>
+      
+//       {loading ? (
+//         <p>Loading transactions...</p>
+//       ) : error ? (
+//         <p className="text-red-500">{error}</p>
+//       ) : transactions.length ? (
 //         <table className="min-w-full bg-white shadow-md rounded-lg">
 //           <thead className="bg-gray-100">
 //             <tr>
-//               <th className="py-3 px-6 text-left">Name</th>
-//               <th className="py-3 px-6 text-left">Email</th>
-//               <th className="py-3 px-6 text-left">Phone</th>
-//               <th className="py-3 px-6 text-left">Actions</th>
+//               <th scope="col" className="py-3 px-6 text-left">Date</th>
+//               <th scope="col" className="py-3 px-6 text-left">Total</th>
+//               <th scope="col" className="py-3 px-6 text-left">Debt</th>
 //             </tr>
 //           </thead>
 //           <tbody>
-//             {customers.length > 0 ? (
-//               customers.map((customer) => (
-//                 <tr key={customer.id} className="border-b">
-//                   <td className="py-3 px-6">{customer.name}</td>
-//                   <td className="py-3 px-6">{customer.email}</td>
-//                   <td className="py-3 px-6">{customer.phone}</td>
-//                   <td className="py-3 px-6">
-//                     <button
-//                       onClick={() => startEditing(customer)}
-//                       className="text-blue-500 hover:text-blue-700 mr-2"
-//                     >
-//                       Edit
-//                     </button>
-//                     <button
-//                       onClick={() => removeCustomer(customer.id)}
-//                       className="text-red-500 hover:text-red-700"
-//                     >
-//                       Delete
-//                     </button>
-//                   </td>
-//                 </tr>
-//               ))
-//             ) : (
-//               <tr>
-//                 <td colSpan="4" className="py-4 px-6 text-center">
-//                   No customers found.
-//                 </td>
+//             {transactions.map((txn) => (
+//               <tr key={txn.id} className="border-b">
+//                 <td className="py-3 px-6">{new Date(txn.date).toLocaleDateString()}</td>
+//                 <td className="py-3 px-6">{formatCurrency(txn.total)}</td>
+//                 <td className="py-3 px-6">{txn.debt ? 'Yes' : 'No'}</td>
 //               </tr>
-//             )}
+//             ))}
 //           </tbody>
 //         </table>
-//       </div>
+//       ) : (
+//         <p>No transactions found for this customer.</p>
+//       )}
 //     </div>
 //   );
 // };
 
-// export default Customers;
-import  { useState, useEffect } from 'react';
+// CustomerTransactions.propTypes = {
+//   customerId: PropTypes.oneOfType([
+//     PropTypes.string,
+//     PropTypes.number
+//   ]).isRequired,
+// };
 
-const API_URL = '/api/customers/';
+// export default CustomerTransactions;
 
-const Customers = () => {
-  const [customers, setCustomers] = useState([]);
-  const [newCustomer, setNewCustomer] = useState({ name: '', email: '', phone: '' });
-  const [editingCustomer, setEditingCustomer] = useState(null);
-  const [loading, setLoading] = useState(false);
+
+// import { useState, useEffect } from 'react';
+// import PropTypes from 'prop-types';
+
+// const CustomerTransactions = ({ customerId }) => {
+//   const [transactions, setTransactions] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+
+//   useEffect(() => {
+//     // Validate customerId before making the fetch call
+//     if (!customerId) {
+//       setError('Invalid customer ID.');
+//       setLoading(false);
+//       return;
+//     }
+
+//     const fetchTransactions = async () => {
+//       setLoading(true);
+//       setError(null);
+
+//       try {
+//         const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/customers/${customerId}/transactions/`);
+        
+//         if (!response.ok) {
+//           throw new Error(`Error: ${response.status} ${response.statusText}`);
+//         }
+
+//         const data = await response.json();
+//         setTransactions(data);
+//       } catch (err) {
+//         console.error('Fetch error:', err);
+//         setError('Failed to fetch transactions. Please try again later.');
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchTransactions();
+//   }, [customerId]);
+
+//   // Function to format currency
+//   const formatCurrency = (amount) => {
+//     if (amount == null) return 'N/A';
+//     return new Intl.NumberFormat('en-US', {
+//       style: 'currency',
+//       currency: 'USD',
+//     }).format(amount);
+//   };
+
+//   return (
+//     <div>
+//       <h2 className="text-xl font-bold mb-4">Transaction History</h2>
+      
+//       {loading ? (
+//         <p>Loading transactions for customer ID: {customerId}...</p>
+//       ) : error ? (
+//         <p className="text-red-500">{error}</p>
+//       ) : transactions.length ? (
+//         <table className="min-w-full bg-white shadow-md rounded-lg">
+//           <thead className="bg-gray-100">
+//             <tr>
+//               <th scope="col" className="py-3 px-6 text-left">Date</th>
+//               <th scope="col" className="py-3 px-6 text-left">Total</th>
+//               <th scope="col" className="py-3 px-6 text-left">Debt</th>
+//             </tr>
+//           </thead>
+//           <tbody>
+//             {transactions.map((txn) => (
+//               <tr key={txn.id} className="border-b hover:bg-gray-50">
+//                 <td className="py-3 px-6">{new Date(txn.date).toLocaleDateString()}</td>
+//                 <td className="py-3 px-6">{formatCurrency(txn.total)}</td>
+//                 <td className="py-3 px-6">{txn.debt ? 'Yes' : 'No'}</td>
+//               </tr>
+//             ))}
+//           </tbody>
+//         </table>
+//       ) : (
+//         <p>No transactions found for this customer.</p>
+//       )}
+//     </div>
+//   );
+// };
+
+// CustomerTransactions.propTypes = {
+//   customerId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+// };
+
+// export default CustomerTransactions;
+
+
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+
+const CustomerTransactions = ({ customerId }) => {
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchCustomers();
-  }, []);
-
-  const fetchCustomers = async () => {
-    try {
-      const res = await fetch(API_URL);
-      if (!res.ok) throw new Error('Failed to fetch customers');
-      
-      const data = await res.json();
-      setCustomers(data);
-      setError(null);
-    } catch (err) {
-      console.error('Error fetching customers:', err);
-      setError('Could not load customers. Please try again later.');
+    if (!customerId) {
+      setError('Invalid customer ID.');
+      setLoading(false);
+      return;
     }
-  };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewCustomer({ ...newCustomer, [name]: value });
-  };
+    const fetchTransactions = async () => {
+      setLoading(true);
+      setError(null);
 
-  const addCustomer = async (e) => {
-    e.preventDefault();
-    if (newCustomer.name && newCustomer.email && newCustomer.phone) {
       try {
-        setLoading(true);
-        const res = await fetch(API_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(newCustomer),
-        });
-        if (res.ok) {
-          // Update local state instead of refetching
-          const createdCustomer = await res.json();
-          setCustomers((prevCustomers) => [...prevCustomers, createdCustomer]);
-          setNewCustomer({ name: '', email: '', phone: '' });
-          setError(null);
-        } else {
-          throw new Error('Failed to add customer');
+        const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/customers/${customerId}/transactions/`);
+        
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
         }
+
+        const data = await response.json();
+        setTransactions(data);
       } catch (err) {
-        console.error(err);
-        setError('Error adding customer. Please try again.');
+        console.error('Fetch error:', err);
+        setError('Failed to fetch transactions. Please try again later.');
       } finally {
         setLoading(false);
       }
-    }
-  };
+    };
 
-  const removeCustomer = async (id) => {
-    try {
-      const res = await fetch(`${API_URL}${id}/`, {
-        method: 'DELETE',
-      });
-      if (res.ok) {
-        setCustomers(customers.filter((customer) => customer.id !== id));
-        setError(null);
-      } else {
-        throw new Error('Failed to delete customer');
-      }
-    } catch (err) {
-      console.error(err);
-      setError('Error deleting customer. Please try again.');
-    }
-  };
+    fetchTransactions();
+  }, [customerId]);
 
-  const startEditing = (customer) => {
-    setEditingCustomer(customer);
-    setNewCustomer(customer);
-  };
-
-  const saveEditedCustomer = async (e) => {
-    e.preventDefault();
-    try {
-      setLoading(true);
-      const res = await fetch(`${API_URL}${editingCustomer.id}/`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newCustomer),
-      });
-      if (res.ok) {
-        setCustomers(customers.map((cust) => (cust.id === editingCustomer.id ? newCustomer : cust)));
-        setEditingCustomer(null);
-        setNewCustomer({ name: '', email: '', phone: '' });
-        setError(null);
-      } else {
-        throw new Error('Failed to save edited customer');
-      }
-    } catch (err) {
-      console.error(err);
-      setError('Error updating customer. Please try again.');
-    } finally {
-      setLoading(false);
-    }
+  const formatCurrency = (amount) => {
+    if (amount == null) return 'N/A';
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(amount);
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6">Customer Management</h1>
+    <div>
+      <h2 className="text-xl font-bold mb-4">Transaction History</h2>
 
-      {error && <p className="text-red-600 mb-4">{error}</p>}
-
-      <form onSubmit={editingCustomer ? saveEditedCustomer : addCustomer} className="mb-6">
-        <div className="mb-4">
-          <input
-            type="text"
-            name="name"
-            placeholder="Customer Name"
-            value={newCustomer.name}
-            onChange={handleInputChange}
-            className="p-2 border border-gray-300 rounded-lg w-full max-w-md"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <input
-            type="email"
-            name="email"
-            placeholder="Customer Email"
-            value={newCustomer.email}
-            onChange={handleInputChange}
-            className="p-2 border border-gray-300 rounded-lg w-full max-w-md"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <input
-            type="tel"
-            name="phone"
-            placeholder="Customer Phone"
-            value={newCustomer.phone}
-            onChange={handleInputChange}
-            className="p-2 border border-gray-300 rounded-lg w-full max-w-md"
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-          disabled={loading}
-        >
-          {loading ? "Saving..." : editingCustomer ? 'Save Changes' : 'Add Customer'}
-        </button>
-        {editingCustomer && (
-          <button
-            type="button"
-            onClick={() => {
-              setEditingCustomer(null);
-              setNewCustomer({ name: '', email: '', phone: '' });
-            }}
-            className="ml-2 bg-gray-500 text-white px-4 py-2 rounded-lg"
-          >
-            Cancel
-          </button>
-        )}
-      </form>
-
-      
-      <div className="overflow-x-auto">
+      {loading ? (
+        <p>Loading transactions for customer ID: {customerId}...</p>
+      ) : error ? (
+        <p className="text-red-500">{error}</p>
+      ) : transactions.length ? (
         <table className="min-w-full bg-white shadow-md rounded-lg">
           <thead className="bg-gray-100">
             <tr>
-              <th className="py-3 px-6 text-left">Name</th>
-              <th className="py-3 px-6 text-left">Email</th>
-              <th className="py-3 px-6 text-left">Phone</th>
-              <th className="py-3 px-6 text-left">Actions</th>
+              <th scope="col" className="py-3 px-6 text-left">Date</th>
+              <th scope="col" className="py-3 px-6 text-left">Total</th>
+              <th scope="col" className="py-3 px-6 text-left">Debt</th>
             </tr>
           </thead>
           <tbody>
-            {customers.length > 0 ? (
-              customers.map((customer) => (
-                <tr key={customer.id} className="border-b">
-                  <td className="py-3 px-6">{customer.name}</td>
-                  <td className="py-3 px-6">{customer.email}</td>
-                  <td className="py-3 px-6">{customer.phone}</td>
-                  <td className="py-3 px-6">
-                    <button
-                      onClick={() => startEditing(customer)}
-                      className="text-blue-500 hover:text-blue-700 mr-2"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => removeCustomer(customer.id)}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="4" className="py-4 px-6 text-center">
-                  No customers found.
-                </td>
+            {transactions.map((txn) => (
+              <tr key={txn.id} className="border-b hover:bg-gray-50">
+                <td className="py-3 px-6">{new Date(txn.date).toLocaleDateString()}</td>
+                <td className="py-3 px-6">{formatCurrency(txn.total)}</td>
+                <td className="py-3 px-6">{txn.debt ? 'Yes' : 'No'}</td>
               </tr>
-            )}
+            ))}
           </tbody>
         </table>
-      </div>
+      ) : (
+        <p>No transactions found for this customer.</p>
+      )}
     </div>
   );
 };
 
-export default Customers;
+CustomerTransactions.propTypes = {
+  customerId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+};
+
+export default CustomerTransactions;
